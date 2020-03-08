@@ -1,31 +1,31 @@
 <template>
-    <section class="v-cal-content">
+    <section class="v-cal-content v-cal-rows">
         <div class="v-cal-weekdays">
             <div class="v-cal-weekday-item" v-for="weekday in weekdays">{{ weekday }}</div>
         </div>
-        <div class="v-cal-days" v-for="row in calendar">
-
-            <div :ref="'days.day_' + day.d.format('DDD')" class="v-cal-day v-cal-day--month"
-                 @click="dayClicked(day)"
-                 :class="{
-                 'is-today': day.isToday,
-                 'is-past': day.isPast,
-                 'is-disabled': day.isDisabled,
-                 'is-different-month': day.isDifferentMonth }" v-for="day in row">
-                <span class="v-cal-day__number">{{ day.d.date() }}</span>
-                <div class="v-cal-event-list">
-                    <event-item
-                            v-for="event, index in day.events"
-                            :key="index"
-                            :has-dynamic-size="false"
-                            :event="event"
-                            :use12="use12"
-                    >
-                    </event-item>
-                    <!--@click.stop="eventBus.$emit('event-clicked', event)" -->
+        <div class="v-cal-rows scroll-box">
+            <div class="v-cal-days v-cal-row" v-for="row in calendar">
+                <div :ref="'days.day_' + day.d.format('DDD')" class="v-cal-day v-cal-day--month"
+                    @click="dayClicked(day)"
+                    :class="{
+                    'is-today': day.isToday,
+                    'is-past': day.isPast,
+                    'is-disabled': day.isDisabled,
+                    'is-different-month': day.isDifferentMonth }" v-for="day in row">
+                    <span class="v-cal-day__number"><span v-if="day.d.date() == 1">{{ day.d.format("MMMM") }} </span>{{ day.d.date() }}</span>
+                    <div class="v-cal-event-list">
+                        <event-item
+                                v-for="event, index in day.events"
+                                :key="index"
+                                :has-dynamic-size="false"
+                                :event="event"
+                                :use12="use12"
+                        >
+                        </event-item>
+                        <!--@click.stop="eventBus.$emit('event-clicked', event)" -->
+                    </div>
                 </div>
             </div>
-
         </div>
     </section>
 </template>
@@ -51,7 +51,7 @@
         },
         methods: {
             dayClicked(day) {
-                EventBus.$emit('day-clicked', day.d.toDate())
+                EventBus.$emit('range-selected', day.d.toDate())
             },
             buildCalendar() {
                 this.calendar = [];
@@ -87,7 +87,7 @@
 
                 let paddingOffset = 1;
                 // Some padding at the beginning
-                for ( let p = 0; p < moment( this.activeDate ).date( 1 ).weekday(); p++ )
+                for ( let p = 0; p < moment( this.activeDate ).date( 1 ).weekday() ; p++ )
                 {
                     items.unshift({
                         d: moment(monthStart).subtract(paddingOffset, 'day'),
@@ -124,7 +124,3 @@
         },
     }
 </script>
-
-<style scoped>
-
-</style>

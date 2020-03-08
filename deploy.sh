@@ -14,6 +14,6 @@ git init
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:dapd007/v-calendar-scheduler.git master:gh-pages
+git push -f git@github.com:guangboo/v-calendar-scheduler.git master:gh-pages
 
 cd -

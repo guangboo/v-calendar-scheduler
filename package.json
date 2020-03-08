@@ -3,10 +3,10 @@
   "version": "0.7.4",
   "license": "MIT",
   "description": "Calendar scheduler component for VueJs",
-  "homepage": "https://v-calendar.davidpaternina.com/",
-  "bugs": "https://github.com/dapd007/v-calendar-scheduler/issues",
+  "homepage": "https://github.com/guangboo/v-calendar-scheduler",
+  "bugs": "https://github.com/guangboo/v-calendar-scheduler/issues",
   "author": "David Paternina <david@fanxielab.com>",
-  "repository": "https://github.com/dapd007/v-calendar-scheduler",
+  "repository": "https://github.com/guangboo/v-calendar-scheduler",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -38,6 +38,7 @@
     "node-sass-import": "^1.1.1",
     "postcss-cli": "^4.1.0",
     "rimraf": "^2.6.1",
+    "sass-loader": "^8.0.2",
     "vuepress": "^0.8.4"
   }
 }

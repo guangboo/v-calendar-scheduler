@@ -8,53 +8,16 @@
         </div>
       </div>
       <div class="v-cal-weekday__wrapper">
-        <div class="v-cal-weekday-item" v-for="day in days">{{ day.d.format('ddd DD/MM') }}</div>
+        <div class="v-cal-weekday-item" v-for="day in days">{{ day.d.format('ddd MMMDo') }}</div>
       </div>
     </div>
-    <div class="v-cal-days">
+    <div class="v-cal-days scroll-box">
       <div class="v-cal-times">
         <div class="v-cal-hour all-day">{{ allDayLabel }}</div>
         <div class="v-cal-hour" :class="{ 'is-now': time.isSame(now, 'hour') }" v-for="time in times">{{ time | formatTime(use12) }}</div>
       </div>
       <div class="v-cal-days__wrapper">
-        <div class="v-cal-day v-cal-day--week" v-for="day in days" :class="{ 'is-today': day.isToday, 'is-disabled': day.isDisabled }">
-
-          <div class="v-cal-day__hour-block all-day"
-               @click="timeClicked({ date: day.d.toDate(), time: null })">
-            <span class="v-cal-day__hour-block-fill">00:00 <template v-if="use12">PM</template></span>
-            <div class="v-cal-day__hour-content">
-              <div class="v-cal-event-list" :class="{'tiny-events': day.events.filter(e => !e.startTime).length > 2}">
-
-                <event-item
-                        v-for="event, index in day.events.filter(e => !e.startTime)"
-                        :key="index"
-                        :event="event"
-                        :has-dynamic-size="false"
-                        :use12="use12">
-                </event-item>
-
-              </div>
-            </div>
-          </div>
-
-          <div class="v-cal-day__hour-block"
-               @click="timeClicked({ date: day.d.toDate(), time: time.hour() })"
-               :class="[ time.hour() === now.hour() ? 'is-now' : '', hourClass ]" v-for="time in day.availableTimes">
-            <span class="v-cal-day__hour-block-fill">{{ time | formatTime(use12) }}</span>
-            <div class="v-cal-day__hour-content">
-              <div class="v-cal-event-list">
-                <event-item
-                        v-for="event, index in day.events"
-                        :key="index"
-                        :event="event"
-                        :use12="use12"
-                        v-if="event.startTime && time.hours() === event.startTime.hours()">
-                </event-item>
-              </div>
-            </div>
-          </div>
-
-        </div>
+          <DayBase v-for="day in days" :class="{ 'is-today': day.isToday, 'is-disabled': day.isDisabled }" v-bind="activeViewProps(day)"></DayBase>
       </div>
     </div>
   </section>
@@ -66,11 +29,12 @@
     import EventItem from '../EventItem';
     import IsView from '../mixins/IsView';
     import ShowsTimes from '../mixins/ShowsTimes';
+    import DayBase from './DayBase';
 
     export default {
         name: "week",
         mixins: [ IsView, ShowsTimes ],
-        components: { EventItem },
+        components: { EventItem, DayBase },
         data() {
             return {
                 days: [],
@@ -82,8 +46,24 @@
         },
         methods: {
             timeClicked(data) {
-                EventBus.$emit('time-clicked', data)
+                EventBus.$emit('range-selected', data)
             },
+
+            activeViewProps(day) {
+                let props = {
+                    activeDate: day.d,
+                    minDate: this.minDate,
+                    maxDate: this.maxDate,
+                    use12: this.use12,
+                    events: day.events
+                };
+
+                props.timeRange = this.timeRange;
+                props.showTimeMarker = this.showTimeMarker;
+                
+                return props;
+            },
+            
             buildCalendar() {
                 //  Reset events
                 // this.newEvents = JSON.parse(JSON.stringify(this.events));

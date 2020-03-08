@@ -1,10 +1,10 @@
 <template>
     <div ref="event_block" class="v-cal-event-item"
-         :title="event.startTime | formatEventTime(use12) + ' - ' + event.displayText"
+         :title="event.startTime | formatEventTime(use12) + '~'"
          :class="eventClasses"
          @click.stop="eventClicked"
          :style="eventStyles">
-        <span class="v-cal-event-time">{{ event.startTime | formatEventTime(use12) }}</span>
+        <span class="v-cal-event-time">{{ event.startTime | formatEventTime(use12) }} ~ {{ event.endTime | formatEventTime(use12) }}</span>
         <span class="v-cal-event-name">{{ event.displayText }}</span>
     </div>
 </template>
@@ -58,7 +58,6 @@
         },
         computed: {
             displayHeight() {
-
                 const end = this.event.endTime.hours() > 0 ? moment(this.event.endTime) : moment(this.event.endTime).add(1, 'days');
 
                 const hours = end.diff(this.event.startTime, 'hours', true);
@@ -82,7 +81,7 @@
                         const width = 100 / ( this.event.overlaps + 1 );
                         styles.push({
                             'width': width + '%',
-                            'left': width + '%'
+                            //'left': width + '%'
                         });
                     }
 
@@ -108,9 +107,9 @@
                     return '';
 
                 if ( use12 )
-                    return hour.format( hour.minutes() > 0 ? 'h.mma' : 'ha' ).slice(0, -1);
+                    return hour.format( hour.minutes() > 0 ? 'h:mma' : 'ha' ).slice(0, -1);
 
-                return hour.format( hour.minutes() > 0 ? 'HH.mm' : 'HH' );
+                return hour.format( hour.minutes() > 0 ? 'HH:mm' : 'HH' );
             }
         },
     }
