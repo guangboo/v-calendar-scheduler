@@ -15,3 +15,5 @@ node_modules/
 .npm
 
 *.loc.*
+
+.DS_Store
