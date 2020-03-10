@@ -22,29 +22,29 @@ $v-cal-body-padding: 20px;
 $v-cal-header-padding: 0 0 40px;
 
 //  Calendar content
-$v-cal-content-border-color: #EAF0F4 !default;
+$v-cal-content-border-color: #ddd !default;
 
 //  Calendar content head
 $v-cal-days-head-bg: #F5F6FA !default;
-$v-cal-days-head-border-color: #EAF0F4 !default;
+$v-cal-days-head-border-color: #ddd !default;
 $v-cal-days-head-color: #A3A6B4 !default;
 $v-cal-days-head-font-size: .75rem !default;
 $v-cal-days-head-font-weight: bold !default;
 
 //  Days
 $v-cal-day-bg: $white !default;
-$v-cal-day-border-color: #EAF0F4 !default;
+$v-cal-day-border-color: #ddd !default;
 
 $v-cal-day-diff-month-color: rgba(67, 66, 93, .3) !default;
 
-$v-cal-day-today-bg: #F5F6FA !default;
+$v-cal-day-today-bg: rgba(46, 139, 87, .1) !default;
 
 $v-cal-day-disabled-bg: #f0f0f0 !default;
 $v-cal-day-disabled-color: #b0b0b0 !default;
 
 //  Days - Month
-$v-cal-day-number-font-size: .75rem !default;
-$v-cal-day-number-padding: 10px !default;
+$v-cal-day-number-font-size: .9rem !default;
+$v-cal-day-number-padding: 4px !default;
 $v-cal-day-month-height: 140px !default;
 
 $v-cal-day-month-hover-bg: #fcfcfc !default;
@@ -55,19 +55,19 @@ $v-cal-time-block-hover-bg: #fcfcfc !default;
 
 //  Week - Day times
 $v-cal-times-bg: $white !default;
-$v-cal-times-font-size: .8125rem !default;
-$v-cal-times-border-color: #EAF0F4 !default;
+$v-cal-times-font-size: .7125rem !default;
+$v-cal-times-border-color: #ddd !default;
 
 //  Events
 $v-cal-event-bg: $v-cal-primary !default;
 $v-cal-event-color: $white !default;
-$v-cal-event-border-radius: 4px !default;
+$v-cal-event-border-radius: 2px !default;
 
-$v-cal-event-padding-sides: 14px;
-$v-cal-event-padding: 7px $v-cal-event-padding-sides;
+$v-cal-event-padding-sides: 8px;
+$v-cal-event-padding: 2px $v-cal-event-padding-sides/2;
 
-$v-cal-event-week-padding: 3px 14px;
-$v-cal-event-week-font-size: .9rem;
+$v-cal-event-week-padding: 2px $v-cal-event-padding-sides/2;
+$v-cal-event-week-font-size: .7125rem;
 
 //  Time marker
 $v-cal-time-marker-color: $v-cal-primary !default;

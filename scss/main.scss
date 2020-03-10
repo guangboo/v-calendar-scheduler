@@ -3,6 +3,52 @@
 
 @import "./dialog";
 
+.drawer {
+  position: absolute !important;
+  z-index: 9 !important;
+  background-color: rgba(46, 138, 84, 0.3) !important;
+  box-shadow: none !important;
+  width: 100% !important;
+  border-radius: 0 !important;
+  color: #000 !important;
+  border: none !important;
+  border-top: 2px solid rgb(2, 88, 2) !important;
+  border-bottom: 2px solid rgb(2, 88, 2) !important;
+  display: none;
+  white-space: pre-line !important;
+  font-size: 90% !important;
+
+  // animation: opacityAnimation 5s ease infinite;
+
+  // @keyframes opacityAnimation {
+  //   0% {
+  //     background-color: rgba(135, 206, 356, 1)
+  //   }
+  //   20% {
+  //     background-color: rgba(135, 206, 356, .8)
+  //   }
+  //   40% {
+  //     background-color: rgba(135, 206, 356, .6)
+  //   }
+  //   60% {
+  //     background-color: rgba(135, 206, 356, .4)
+  //   }
+  //   80% {
+  //     background-color: rgba(135, 206, 356, .6)
+  //   }
+  //   80% {
+  //     background-color: rgba(135, 206, 356, .8)
+  //   }
+  //}
+
+  &::after {
+    background: none !important;
+  }
+}
+
+.v-cal-day {
+  position: relative !important;
+}
 .v-cal {
   font-family: inherit;
   font-size: inherit;
@@ -15,6 +61,19 @@
   * {
     box-sizing: inherit;
   }
+}
+
+.v-cal-rows {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+.v-cal-row {
+  flex: 1;
+}
+.v-cal-narrow {
+  flex: none;
 }
 
 .v-cal-button {
@@ -63,7 +122,8 @@
   display: flex;
   justify-content: space-between;
 
-  .actions-left, .actions-right {
+  .actions-left,
+  .actions-right {
     display: flex;
   }
 
@@ -94,7 +154,8 @@
 .v-cal-content {
   border: 1px solid $v-cal-content-border-color;
 
-  .v-cal-weekdays, .v-cal-days {
+  .v-cal-weekdays,
+  .v-cal-days {
     display: flex;
   }
 
@@ -103,7 +164,7 @@
     position: relative;
     flex-grow: 1;
     background-color: $v-cal-event-bg;
-    color: $v-cal-event-bg;//$v-cal-event-color;
+    color: $v-cal-event-bg; //$v-cal-event-color;
     border-radius: $v-cal-event-border-radius;
     padding: $v-cal-event-padding;
     text-align: left;
@@ -111,16 +172,16 @@
     overflow: hidden;
     cursor: pointer;
 
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      width: $v-cal-event-padding-sides;
-      height: 100%;
-      top: 0;
-      right: 0;
-      background: linear-gradient(to right, transparent 0%, currentColor 75%);
-    }
+    // &::after {
+    //   content: "";
+    //   display: block;
+    //   position: absolute;
+    //   width: $v-cal-event-padding-sides;
+    //   height: 100%;
+    //   top: 0;
+    //   right: 0;
+    //   background: linear-gradient(to right, transparent 0%, currentColor 75%);
+    // }
 
     &:not(:last-child) {
       margin-bottom: 1px;
@@ -133,7 +194,7 @@
 
     .v-cal-event-time {
       font-weight: bold;
-      font-size: .85rem;
+      font-size: 0.7125rem;
     }
 
     .v-cal-event-name {
@@ -144,7 +205,6 @@
   &.v-cal-content--month,
   &.v-cal-content--week,
   &.v-cal-content--day {
-
     .v-cal-days .v-cal-day {
       background: $v-cal-day-bg;
     }
@@ -165,7 +225,6 @@
   }
 
   &.v-cal-content--month {
-
     .v-cal-weekdays .v-cal-weekday-item,
     .v-cal-days .v-cal-day {
       width: (100% / 7);
@@ -181,7 +240,7 @@
       @include soft_transition;
       position: relative;
       text-align: right;
-      min-height: $v-cal-day-month-height;
+      // min-height: $v-cal-day-month-height;
       padding-bottom: 2px;
 
       &.v-cal-day--month {
@@ -212,13 +271,14 @@
         display: block;
         font-size: $v-cal-day-number-font-size;
         padding: $v-cal-day-number-padding;
+        user-select: none;
+        cursor: default;
       }
     }
   }
 
   &.v-cal-content--month .v-cal-day,
   &.v-cal-content--week .v-cal-day {
-
     &.is-disabled {
       background-color: $v-cal-day-disabled-bg;
       color: $v-cal-day-disabled-color;
@@ -229,7 +289,7 @@
   &.v-cal-content--day {
     .v-cal-hour.all-day,
     .v-cal-day__hour-block.all-day {
-      border-width: 3px !important;
+      border-width: 1px !important;
     }
   }
 
@@ -241,15 +301,31 @@
     border-right: 1px solid $v-cal-times-border-color;
 
     .v-cal-hour {
-      padding: 15px;
+      padding: 0px 15px;
+      width: 80px;
+      height: 60px;
+      //line-height:60px;
+      text-align: center;
+      font-size: $v-cal-times-font-size;
+      color: gray;
+      cursor: default;
+      user-select: none;
+
+      &.all-day {
+        line-height: 50px;
+        font-weight: 700;
+        height: 50px;
+
+        // border-bottom: 1px solid $v-cal-times-border-color;
+      }
 
       &.is-now {
         font-weight: bold;
       }
 
-      &:not(:last-child) {
-        border-bottom: 1px solid $v-cal-times-border-color;
-      }
+      // &:not(:last-child) {
+      //   border-bottom: 1px solid $v-cal-times-border-color;
+      // }
     }
   }
 
@@ -277,6 +353,7 @@
     .v-cal-day__hour-block {
       @include soft_transition;
       padding: 15px;
+      height: 60px;
       position: relative;
       background-color: $v-cal-time-block-bg;
 
@@ -330,7 +407,7 @@
 
     .v-cal-event-item {
       z-index: 1;
-      box-shadow: 0 0 5px rgba(0,0,0,.25);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
       width: 100%;
       padding: $v-cal-event-week-padding;
       font-size: $v-cal-event-week-font-size;
@@ -343,10 +420,9 @@
 
   &.v-cal-content--week .v-cal-day,
   &.v-cal-content--day .v-cal-day {
-
     .v-cal-day__hour-block.is-now.has-marker::after,
     &:first-child .v-cal-day__hour-block.is-now.has-marker::before {
-      content: '';
+      content: "";
       display: block;
       position: absolute;
       top: 0;
@@ -367,10 +443,9 @@
     }
 
     .v-cal-day__hour-block.is-now,
-    &:first-child .v-cal-day__hour-block.is-now{
+    &:first-child .v-cal-day__hour-block.is-now {
       $i: 10;
       @while $i <= 60 {
-
         &.is-#{$i}::after,
         &.is-#{$i}::before {
           top: $i / 60 * 100%;
@@ -413,12 +488,23 @@
   }
 }
 
+.v-cal-content--week,
+.v-cal-content--day {
+  margin-bottom: 8px;
+}
+.v-cal-weekdays {
+  position: fixed;
+  margin-top: -1px !important;
+  border-top: 1px solid #ccc;
+  width: calc(100% - 340px) !important;
+  z-index: 10;
+  height: 48px;
+}
+.v-cal-days.scroll-box,
+.v-cal-rows.scroll-box {
+  margin-top: 47px;
+}
 
-
-
-
-
-
-
-
-
+.v-cal-times .v-cal-hour {
+  font-size: 0.7rem;
+}

@@ -406,7 +406,9 @@ export default {
       } else if (this.mode === "resize-s") {
         this.resized(event);
       }
-      this.$refs.refDrawer.style.cursor = "pointer";
+      if (this.$refs.refDrawer) {
+        this.$refs.refDrawer.style.cursor = "pointer";
+      }
     },
     timeClicked(data) {
       const date = this.day.d.toArray();
@@ -462,6 +464,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-</style>
