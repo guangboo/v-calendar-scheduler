@@ -261,7 +261,7 @@ export default {
       }
 
       this.oStartTime = this.oEndTime = this.oPageY = null;
-      $(this.$refs.refDrawer).css("cursor", "pointer");
+      this.$refs.refDrawer.style.cursor = "pointer";
       this.mode = null;
     },
 
@@ -289,24 +289,26 @@ export default {
         const pageY = this.getCurrentY(event);
         if (Math.abs(time - this.endTime) / 1000 / 60 <= 8) {
           this.mode = "resize-s";
-          $(this.$refs.refDrawer).css("cursor", "ns-resize");
+          this.$refs.refDrawer.style.cursor = "ns-resize";
         } else {
           this.mode = "move";
-          $(this.$refs.refDrawer).css("cursor", "move");
+          this.$refs.refDrawer.style.cursor = "move";
           this.oStartTime = this.startTime;
           this.oEndTime = this.endTime;
           this.oPageY = pageY;
         }
 
         const self = this;
-        $(window.document.body).bind("mouseup", function(event) {
+        const f = function(event) {
           if (self.mode === "resize-s") {
             self.resized(event);
           } else if (self.mode === "move") {
             self.moved(event);
           }
-          $(window.document.body).unbind("mouseup");
-        });
+          window.document.body.removeEventListener("mouseup", f);
+        };
+
+        window.document.body.addEventListener("mouseup", f);
       }
     },
 
@@ -330,13 +332,14 @@ export default {
         this.mode = "select";
 
         const self = this;
-
-        $(window.document.body).bind("mouseup", function(event) {
+        const f = function(event) {
           if (self.mode === "select") {
             self.selected(event);
-            $(window.document.body).unbind("mouseup");
+            window.document.body.removeEventListener("mouseup", f);
           }
-        });
+        };
+
+        window.document.body.addEventListener("mouseup", f);
       }
     },
     selectMove(event) {
@@ -389,9 +392,9 @@ export default {
         let time = this.getCurrentTime(event);
 
         if (Math.abs(time - this.endTime) / 1000 / 60 <= 8) {
-          $(this.$refs.refDrawer).css("cursor", "ns-resize");
+          this.$refs.refDrawer.style.cursor = "ns-resize";
         } else {
-          $(this.$refs.refDrawer).css("cursor", "move");
+          this.$refs.refDrawer.style.cursor = "move";
         }
       }
     },
@@ -403,7 +406,7 @@ export default {
       } else if (this.mode === "resize-s") {
         this.resized(event);
       }
-      $(this.$refs.refDrawer).css({ cursor: "pointer" });
+      this.$refs.refDrawer.style.cursor = "pointer";
     },
     timeClicked(data) {
       const date = this.day.d.toArray();
